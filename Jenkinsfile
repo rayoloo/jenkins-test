@@ -28,7 +28,7 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                withDockerRegistry([credentialsId: 'docker-hub-credentials']) {
+                withDockerRegistry([credentialsId: 'docker-hub-credentials',  url: 'https://index.docker.io/v1/']) {
                     sh 'docker push rayolo/cicd-test:latest'
                 }
             }
