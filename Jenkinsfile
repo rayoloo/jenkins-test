@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Prepare Workspace') {
+            steps {
+                deleteDir() // Cleans the workspace to ensure there is no old data
+            }
+        }   
+
         stage('Clone Repository') {
             steps {
                 git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/rayoloo/jenkins-test.git'
