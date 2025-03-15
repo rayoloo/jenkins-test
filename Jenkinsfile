@@ -1,10 +1,6 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:dind'
-            args '--privileged'  // Required for Docker-in-Docker
-        }
-    }
+    agent any
+    
 
     stages {
         stage('Clone Repository') {
