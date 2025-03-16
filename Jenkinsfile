@@ -2,11 +2,27 @@ pipeline {
     agent any
 
     stages {
-        stage('Prepare Workspace') {
+        stage('Install Tools') {
             steps {
-                deleteDir() // Cleans the workspace to ensure there is no old data
+                sh '''
+                    # Update package list
+                    apt-get update
+                    
+                    # Install Node.js and npm
+                    apt-get install -y curl
+                    curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+                    apt-get install -y nodejs
+                    
+                    # Install Docker CLI
+                    apt-get install -y docker.io
+                    
+                    # Verify installations
+                    node --version
+                    npm --version
+                    docker --version
+                '''
             }
-        }   
+        }
 
         stage('Clone Repository') {
             steps {
