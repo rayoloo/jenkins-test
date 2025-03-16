@@ -1,38 +1,7 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:24.0-dind'  // Official Docker image with DinD support
-            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'  // Required for DinD
-        }
-    }
+    agent any
 
     stages {
-        stage('Prepare Workspace') {
-            steps {
-                deleteDir()
-            }
-        }   
-
-        stage('Install Tools') {
-            steps {
-                sh '''
-                    # Update package list
-                    apk update  # Using apk since docker:dind is Alpine-based
-                    
-                    # Install curl
-                    apk add --no-cache curl
-                    
-                    # Install Node.js and npm
-                    apk add --no-cache nodejs npm
-                    
-                    # Verify installations
-                    node --version
-                    npm --version
-                    docker --version
-                '''
-            }
-        }
-
         stage('Clone Repository') {
             steps {
                 git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/rayoloo/jenkins-test.git'
