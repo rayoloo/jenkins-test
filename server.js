@@ -8,7 +8,7 @@ app.get("/", (req, res) => {
 
 
 app.get("/api", (req, res) => {
-  res.send("Hello from api path!");
+  res.send("Hello from api path1!");
 });
 
 app.listen(port, () => {
